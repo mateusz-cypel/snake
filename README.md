@@ -1,7 +1,7 @@
 ### 1. Window:
   - [ ] resizable
   - [ ] stop the game and display `PAUSE` label 
-  - [ ] split into map and scoreboard (width ratio 3 : 1)
+  - [x] split into map and scoreboard (width ratio 3 : 1)
     - map
       - [ ] map as a grid
       - [ ] snake and fruits
