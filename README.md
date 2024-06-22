@@ -3,7 +3,7 @@
   - [ ] stop the game and display `PAUSE` label 
   - [x] split into map and scoreboard (width ratio 3 : 1)
     - map
-      - [ ] map as a grid
+      - [x] map as a grid
       - [ ] snake and fruits
       - [ ] border which cannot be pass 
     - scoreboard 
