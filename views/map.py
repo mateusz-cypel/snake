@@ -6,6 +6,7 @@ GRID_BORDER_COLOR = (0, 0, 0)
 GRID_BORDER_THICKNESS = 1
 GRID_SIZE = (60, 60)
 
+
 class Map(pygame.Surface):
     def __init__(self):
         super().__init__(MAP_SIZE)

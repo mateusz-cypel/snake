@@ -1,6 +1,6 @@
 import pygame
 
-from window import Window
+from views.window import Window
 
 
 class Game:

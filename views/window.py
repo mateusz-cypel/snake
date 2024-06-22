@@ -1,7 +1,7 @@
 import pygame
 
-from map import Map
-from scoreboard import Scoreboard
+from views.map import Map
+from views.scoreboard import Scoreboard
 
 WINDOW_SIZE = (800, 600)
 WINDOW_TITLE = "Hungry Python"
