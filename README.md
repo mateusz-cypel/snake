@@ -7,10 +7,10 @@
       - [ ] snake and fruits
       - [ ] border which cannot be pass 
     - scoreboard 
-      - [ ] scoreboard split into:
-        - [ ] current score
-        - [ ] hi-score
-        - [ ] energy
+      - [x] scoreboard split into:
+        - [x] current score
+        - [x] hi-score
+        - [x] energy
    
 ### 2. SPAWNING FRUITS:
   - [ ] 3 different fruits with different:
