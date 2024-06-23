@@ -1,6 +1,6 @@
 import pygame
 
-from views.scoreboard.section import Section
+from graphics.views.scoreboard.section import Section
 
 SCOREBOARD_SIZE = (200, 600)
 SCOREBOARD_BACKGROUND_COLOR = (18, 18, 176)
