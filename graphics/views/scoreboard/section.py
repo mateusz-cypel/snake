@@ -2,7 +2,7 @@ from typing import Any, Tuple
 
 import pygame
 
-from widgets import Label
+from graphics.widgets import Label
 
 DEFAULT_SPACING = 10
 DEFAULT_PADDING = (0, 0)
