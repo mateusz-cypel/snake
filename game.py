@@ -8,6 +8,7 @@ class Game:
         self.window = Window()
 
     def run(self):
+        clock = pygame.time.Clock()
         is_running = True
         while is_running:
             for event in pygame.event.get():
@@ -15,6 +16,7 @@ class Game:
                     is_running = False
 
             pygame.display.flip()
+            clock.tick(60)
         pygame.quit()
 
 
