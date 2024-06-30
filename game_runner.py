@@ -16,7 +16,7 @@ class GameRunner:
                     is_running = False
             self._game.handle()
             pygame.display.flip()
-            clock.tick(2)
+            clock.tick(60)
         pygame.quit()
 
 

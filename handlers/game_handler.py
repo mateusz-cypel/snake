@@ -1,5 +1,6 @@
 import pygame
 
+from handlers.joystick_input_handler import JoystickInputHandlerSubjectWrapper, JoystickInputHandler
 from handlers.snake_movement_handler import SnakeMovementHandler
 from providers.free_spot_provider import FreeSpotProvider
 from providers.fruit_provider import FruitProvider
@@ -9,6 +10,7 @@ from graphics.views.map import Map
 from graphics.views.scoreboard import Scoreboard
 from handlers.board_handler import BoardHandler, CollisionStatus
 from models import Size, Orange as OrangeModel, Apple as AppleModel, Strawberry as StrawberryModel, Snake, BoardIndex
+from snake_movement_observer import SnakeMoveObserver
 
 WINDOW_SIZE = (800, 600)
 WINDOW_TITLE = "Hungry Python"
@@ -16,10 +18,11 @@ WINDOW_TITLE = "Hungry Python"
 # map width: scoreboard width is in 3:1 ratio
 MAP_GRID_BORDER_COLOR = (0, 0, 0)
 MAP_GRID_BORDER_THICKNESS = 1
-MAP_GRID_CELL_SIZE = (60, 60)
+MAP_GRID_CELL_SIZE = (15, 15)
 MAP_SIZE = (600, 600)
 MAP_LEFT_TOP = (0, 0)
 MAP_BACKGROUND_COLOR = (76, 18, 18)
+MAP_BORDER_COLOR = (15, 15, 15)
 
 SCOREBOARD_LEFT_TOP = (600, 0)  #
 
@@ -29,6 +32,7 @@ config = {
         "size": WINDOW_SIZE,
         "map": {
             "background_color": MAP_BACKGROUND_COLOR,
+            "border_color": MAP_BORDER_COLOR,
             "left_top": MAP_LEFT_TOP,
             "size": MAP_SIZE,
             "grid": {
@@ -73,29 +77,31 @@ class GameHandler:
         self.spot_provider = FreeSpotProvider(
             board=self.board_handler
         )
-
+        self.snake = Snake(energy=20, direction="RIGHT")
         snake_starting_point = self.spot_provider.get()
         snake_starting_point = BoardIndex(x=1, y=1)
         self.board_handler.add_snake_head(snake_starting_point)
         fruit_starting_point = BoardIndex(y=1, x=7)
         self.board_handler.add_fruit(index=fruit_starting_point, fruit=self.fruit_provider.get())
 
+        snake_move_observer = SnakeMoveObserver(self.snake)
+        self.joystick_input_handler_subject_wrapper = JoystickInputHandlerSubjectWrapper(JoystickInputHandler())
+        self.joystick_input_handler_subject_wrapper.attach(snake_move_observer)
+
     def handle(self):
+        self.map.clear()
+
+        self.joystick_input_handler_subject_wrapper.read()
+        print(self.snake.direction)
         # todo in progress
         move = (
             SnakeMovementHandler()
             .next_move(
-                Snake(energy=20, direction="RIGHT"),
+                self.snake,
             )
         )
         next_index = self.board_handler.snake_head_index + move
         collision = self.board_handler.check_collision(next_index)
-
-        print(f'{self.board_handler.snake_head_index=}')
-        print(f'--')
-        print(f'{self.board_handler.current_fruit_index=}')
-        print(f'--')
-        self.map.clear()
 
         fruit_obj_class = fruit_map[type(self.board_handler.current_fruit)]
         fruit_cell = self.map.get_cell(self.board_handler.current_fruit_index)

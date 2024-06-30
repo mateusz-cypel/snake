@@ -5,13 +5,6 @@ import pygame
 from board import Board
 from models import Cell, BoardIndex
 
-MAP_SIZE = (600, 600)  # width x height
-MAP_BACKGROUND_COLOR = (76, 18, 18)
-MAP_BORDER_COLOR = (15, 15, 15)
-GRID_BORDER_COLOR = (0, 0, 0)
-GRID_BORDER_THICKNESS = 1
-GRID_SIZE = (60, 60)
-
 
 class Map(pygame.Surface):
     def __init__(self, config: dict):
@@ -50,19 +43,21 @@ class Map(pygame.Surface):
         return self._board[index]
 
     def draw_border(self):
+        color = self.config["border_color"]
+
         for y in range(self._board.rows):
             if y == 0 or y == self._board.rows - 1:
                 for x in range(self._board.cols):
                     cell = self._board[BoardIndex(x=x, y=y)]
                     rect = pygame.Rect(cell.left, cell.top, cell.width, cell.height)
-                    self.fill(MAP_BORDER_COLOR, rect)
+                    self.fill(color, rect)
 
         for y in range(self._board.rows):
             for x in range(self._board.cols):
                 if x == 0 or x == self._board.cols - 1:
                     cell = self._board[BoardIndex(x=x, y=y)]
                     rect = pygame.Rect(cell.left, cell.top, cell.width, cell.height)
-                    self.fill(MAP_BORDER_COLOR, rect)
+                    self.fill(color, rect)
 
     def draw_grid(self) -> None:
         border_color = self.config["grid"]["border"]["color"]
