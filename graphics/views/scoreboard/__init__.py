@@ -26,8 +26,7 @@ class Scoreboard(pygame.Surface):
     # todo update current score and hi-score in the same time
     #  when current score is a new hi-score
 
-    def __init__(self, config: dict):
-        self.config = config
+    def __init__(self):
         super().__init__(SCOREBOARD_SIZE)
         self.fill(SCOREBOARD_BACKGROUND_COLOR)
         for i, title in enumerate(SCOREBOARD_TITLES):

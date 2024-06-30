@@ -4,46 +4,46 @@ import pygame
 
 from board import Board
 from models import Cell, BoardIndex
+from settings import settings
 
 
 class Map(pygame.Surface):
-    def __init__(self, config: dict):
-        self.config = config
-        super().__init__(self.config["size"])
-
-        map_width, map_height = self.config["size"]
-        cell_width, cell_height = self.config["grid"]["cell"]["size"]
+    def __init__(self):
+        super().__init__(
+            size=(settings.map.width, settings.map.height)
+        )
 
         self._board = Board(
-            rows=map_height // cell_height,
-            cols=map_width // cell_width,
+            rows=settings.map.height // settings.map.grid.cell.height,
+            cols=settings.map.width // settings.map.grid.cell.width,
             value=None,
         )
 
-        for y, top in enumerate(range(0, map_height, cell_height)):
-            for x, left in enumerate(range(0, map_width, cell_width)):
+        for y, top in enumerate(range(0, settings.map.height, settings.map.grid.cell.height)):
+            for x, left in enumerate(range(0, settings.map.width, settings.map.grid.cell.height)):
                 self._board.insert(
                     index=BoardIndex(x=x, y=y),
-                    value=Cell(left=left, top=top, width=cell_width, height=cell_height)
+                    value=Cell(
+                        left=left,
+                        top=top,
+                        width=settings.map.grid.cell.width,
+                        height=settings.map.grid.cell.height
+                    )
                 )
 
         self.clear()
         self.draw_grid()
 
-    @property
-    def left_top(self) -> Tuple[int, int]:
-        return self.config["left_top"]
-
     def clear(self):
-        self.fill(self.config["background_color"])
-        if self.config["grid"]["border"]["enabled"]:
+        self.fill(settings.map.background_color.rgb)
+        if settings.map.grid.border.enabled:
             self.draw_border()
 
     def get_cell(self, index: BoardIndex) -> Cell:
         return self._board[index]
 
     def draw_border(self):
-        color = self.config["border_color"]
+        color = settings.map.border_color.rgb
 
         for y in range(self._board.rows):
             if y == 0 or y == self._board.rows - 1:
@@ -60,8 +60,8 @@ class Map(pygame.Surface):
                     self.fill(color, rect)
 
     def draw_grid(self) -> None:
-        border_color = self.config["grid"]["border"]["color"]
-        border_thickness = self.config["grid"]["border"]["thickness"]
+        border_color = settings.map.grid.border.color.rgb
+        border_thickness = settings.map.grid.border.thickness
 
         for y in range(self._board.rows):
             for x in range(self._board.cols):

@@ -1,6 +1,7 @@
-from models import Snake, Move
+from models import Move
 
 
+# todo change to some class
 class SnakeMoveDirection:
     UP = "UP"
     DOWN = "DOWN"
@@ -9,13 +10,13 @@ class SnakeMoveDirection:
 
 
 class SnakeMovementHandler:
-    def next_move(self, snake: Snake) -> Move:
-        if snake.direction == SnakeMoveDirection.UP:
+    def next_move(self, direction: str) -> Move:
+        if direction == SnakeMoveDirection.UP:
             return Move(x=0, y=-1)
-        if snake.direction == SnakeMoveDirection.DOWN:
+        if direction == SnakeMoveDirection.DOWN:
             return Move(x=0, y=1)
-        if snake.direction == SnakeMoveDirection.RIGHT:
+        if direction == SnakeMoveDirection.RIGHT:
             return Move(x=1, y=0)
-        if snake.direction == SnakeMoveDirection.LEFT:
+        if direction == SnakeMoveDirection.LEFT:
             return Move(x=-1, y=0)
         raise Exception("Unknown direction")
