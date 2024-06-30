@@ -1,16 +1,16 @@
 from typing import Tuple
 
-from models import Snake
+from models import Snake, Move
 
 
 class SnakeMovementHandler:
-    def next_move(self, snake: Snake, x: int, y: int) -> Tuple[int, int]:
+    def next_move(self, snake: Snake) -> Move:
         if snake.direction == "UP":
-            return x, y + 1
+            return Move(x=0, y=1)
         if snake.direction == "DOWN":
-            return x, y - 1
+            return Move(x=0, y=-1)
         if snake.direction == "RIGHT":
-            return x + 1, y
+            return Move(x=1, y=0)
         if snake.direction == "LEFT":
-            return x - 1, y
+            return Move(x=-1, y=0)
         raise Exception("Unknown direction")

@@ -8,6 +8,43 @@ class Size:
 
 
 @dataclass(frozen=True)
+class XYField:
+    """
+    x: horizonal
+
+    y: vertical
+    """
+    x: int
+    y: int
+
+
+@dataclass(frozen=True)
+class Move(XYField):
+    pass
+
+
+@dataclass(frozen=True)
+class BoardIndex(XYField):
+    def __add__(self, other):
+        if not isinstance(other, Move):
+            raise Exception
+        return BoardIndex(self.x + other.x, self.y + other.y)
+
+
+@dataclass(frozen=True)
+class Cell:
+    top: int
+    left: int
+    width: int
+    height: int
+
+
+@dataclass(frozen=True)
+class MapIndex(XYField):
+    pass
+
+
+@dataclass(frozen=True)
 class Fruit:
     score: int
     energy: int

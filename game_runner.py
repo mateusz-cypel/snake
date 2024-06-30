@@ -1,6 +1,6 @@
 import pygame
 
-from game_handler import GameHandler
+from handlers.game_handler import GameHandler
 
 
 class GameRunner:
@@ -14,9 +14,9 @@ class GameRunner:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     is_running = False
-
+            self._game.handle()
             pygame.display.flip()
-            clock.tick(60)
+            clock.tick(2)
         pygame.quit()
 
 

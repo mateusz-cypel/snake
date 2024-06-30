@@ -3,15 +3,15 @@ import pygame
 from graphics.views.map import Map
 from graphics.views.scoreboard import Scoreboard
 
-WINDOW_SIZE = (800, 600)
-WINDOW_TITLE = "Hungry Python"
-
 
 class Window:
-    def __init__(self):
-        self.display_surface = pygame.display.set_mode(WINDOW_SIZE)
-        pygame.display.set_caption(WINDOW_TITLE)
-        self.map = Map()
-        self.scoreboard = Scoreboard()
-        self.display_surface.blit(self.map, (0, 0))
-        self.display_surface.blit(self.scoreboard, (600, 0))
+    def __init__(self, config: dict):
+        self.display_surface = pygame.display.set_mode(config["window"]["size"])
+        pygame.display.set_caption(config["window"]["title"])
+        self.map = Map(config=config["window"]["map"])
+        self.scoreboard = Scoreboard(config=config["window"]["scoreboard"])
+        self.refresh()
+
+    def refresh(self):
+        self.display_surface.blit(self.map, self.map.left_top)
+        self.display_surface.blit(self.scoreboard, self.scoreboard.left_top)

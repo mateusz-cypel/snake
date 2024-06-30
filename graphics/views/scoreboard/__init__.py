@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import pygame
 
 from graphics.views.scoreboard.section import Section
@@ -21,7 +23,11 @@ LABEL_FONT_COLOR = (123, 123, 123)
 
 
 class Scoreboard(pygame.Surface):
-    def __init__(self):
+    # todo update current score and hi-score in the same time
+    #  when current score is a new hi-score
+
+    def __init__(self, config: dict):
+        self.config = config
         super().__init__(SCOREBOARD_SIZE)
         self.fill(SCOREBOARD_BACKGROUND_COLOR)
         for i, title in enumerate(SCOREBOARD_TITLES):
@@ -44,3 +50,7 @@ class Scoreboard(pygame.Surface):
                 _section.get_height(),
             )
             self.blit(_section, centered_rect)
+
+    @property
+    def left_top(self) -> Tuple[int, int]:
+        return self.config["left_top"]

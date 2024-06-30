@@ -1,6 +1,6 @@
 import random
 
-from models import Fruit, Apple, Orange, Strawberry
+from models import Apple, Orange, Strawberry
 
 APPLE_SCORE = 5
 APPLE_ENERGY = 5

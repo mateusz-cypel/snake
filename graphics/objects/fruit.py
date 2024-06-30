@@ -1,18 +1,8 @@
-import pygame
-
-import utils
+from graphics.objects.object import Object
 
 
-class Fruit(pygame.Rect):
-    color: utils.Color = None
-
-    def __init__(self, left: float, top: float, width: float, height: float):
-        if not self.color:
-            raise ValueError(f"Color {utils.Color.__class__} must be defined")
-        super().__init__(left, top, width, height)
-
-    def draw(self, surface: pygame.Surface) -> None:
-        surface.fill(self.color, self)
+class Fruit(Object):
+    color = None
 
 
 class Apple(Fruit):
