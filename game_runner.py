@@ -1,11 +1,11 @@
 import pygame
 
-from graphics.views.window import Window
+from game_handler import GameHandler
 
 
-class Game:
-    def __init__(self):
-        self.window = Window()
+class GameRunner:
+    def __init__(self, game: GameHandler):
+        self._game = game
 
     def run(self):
         clock = pygame.time.Clock()
@@ -20,6 +20,9 @@ class Game:
         pygame.quit()
 
 
-def initialize() -> Game:
+def initialize() -> GameRunner:
     pygame.init()
-    return Game()
+    game = GameHandler()
+    return GameRunner(
+        game=game
+    )

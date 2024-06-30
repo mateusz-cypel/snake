@@ -26,3 +26,9 @@ class Orange(Fruit):
 @dataclass(frozen=True)
 class Strawberry(Fruit):
     pass
+
+
+@dataclass
+class Snake:
+    direction: str
+    energy: int
