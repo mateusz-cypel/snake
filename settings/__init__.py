@@ -32,6 +32,7 @@ settings = Settings(
                 ),
                 thickness=MAP_GRID_BORDER_THICKNESS,
                 enabled=MAP_GRID_BORDER_ENABLED,
+                radius=MAP_GRID_BORDER_RADIUS,
             ),
             cell=Cell(
                 width=MAP_GRID_CELL_WIDTH,
@@ -42,6 +43,42 @@ settings = Settings(
     scoreboard=ScoreboardSettings(
         left=SCOREBOARD_LEFT,
         top=SCOREBOARD_TOP,
+        width=SCOREBOARD_WIDTH,
+        height=SCOREBOARD_HEIGHT,
+        titles=SCOREBOARD_TITLES,
+        background_color=Color(
+            red=SCOREBOARD_BACKGROUND_COLOR[0],
+            green=SCOREBOARD_BACKGROUND_COLOR[1],
+            blue=SCOREBOARD_BACKGROUND_COLOR[2],
+        ),
+        section=Section(
+            spacing=SCOREBOARD_SECTION_SPACING,
+            padding=Padding(
+                x=SCOREBOARD_SECTION_PADDING_X,
+                y=SCOREBOARD_SECTION_PADDING_Y,
+            ),
+            border=Border(
+                color=Color(
+                    red=SCOREBOARD_SECTION_BORDER_COLOR[0],
+                    green=SCOREBOARD_SECTION_BORDER_COLOR[1],
+                    blue=SCOREBOARD_SECTION_BORDER_COLOR[2],
+                ),
+                thickness=SCOREBOARD_SECTION_BORDER_THICKNESS,
+                enabled=SCOREBOARD_SECTION_BORDER_ENABLED,
+                radius=SCOREBOARD_SECTION_BORDER_RADIUS,
+            ),
+            value=SCOREBOARD_SECTION_DEFAULT_VALUE,
+            font_size=SCOREBOARD_SECTION_FONT_SIZE,
+            font_color=Color(
+                red=SCOREBOARD_SECTION_FONT_COLOR[0],
+                green=SCOREBOARD_SECTION_FONT_COLOR[1],
+                blue=SCOREBOARD_SECTION_FONT_COLOR[2],
+            ),
+            starting_point=Point(
+                x=SCOREBOARD_SECTION_START_POINT_X,
+                y=SCOREBOARD_SECTION_START_POINT_Y,
+            )
+        )
     ),
     snake=SnakeSettings(
         starting_energy=SNAKE_STARTING_ENERGY,

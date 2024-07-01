@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Tuple, Iterable, Optional
 
 
 @dataclass(frozen=True)
@@ -17,7 +17,8 @@ class Color:
 class Border:
     color: Color
     thickness: int
-    enabled: bool
+    enabled: Optional[bool]
+    radius: Optional[int]
 
 
 @dataclass(frozen=True)
@@ -30,6 +31,29 @@ class Cell:
 class Grid:
     border: Border
     cell: Cell
+
+
+@dataclass(frozen=True)
+class Padding:
+    x: int
+    y: int
+
+
+@dataclass(frozen=True)
+class Point:
+    x: int
+    y: int
+
+
+@dataclass(frozen=True)
+class Section:
+    spacing: int
+    padding: Padding
+    border: Border
+    value: int
+    font_size: int
+    font_color: Color
+    starting_point: Point
 
 
 @dataclass(frozen=True)
@@ -54,6 +78,11 @@ class MapSettings:
 class ScoreboardSettings:
     left: int
     top: int
+    width: int
+    height: int
+    titles: Iterable[str]
+    background_color: Color
+    section: Section
 
 
 @dataclass(frozen=True)

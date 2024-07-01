@@ -3,23 +3,7 @@ from typing import Tuple
 import pygame
 
 from graphics.views.scoreboard.section import Section
-
-SCOREBOARD_SIZE = (200, 600)
-SCOREBOARD_BACKGROUND_COLOR = (18, 18, 176)
-SCOREBOARD_TITLES = (
-    "SCORE",
-    "HI-SCORE",
-    "ENERGY",
-)
-SCOREBOARD_SECTION_BORDER_RADIUS = 25
-SCOREBOARD_SECTION_BORDER_THICKNESS = 3
-SCOREBOARD_SECTION_DEFAULT_VALUE = 0
-SCOREBOARD_SECTION_FONT_SIZE = 20
-SCOREBOARD_SECTION_PADDING = (45, 15)
-SCOREBOARD_SECTION_SPACING = 10
-SCOREBOARD_SECTION_START_POINT = (0, 20)
-
-LABEL_FONT_COLOR = (123, 123, 123)
+from settings import settings
 
 
 class Scoreboard(pygame.Surface):
@@ -27,29 +11,30 @@ class Scoreboard(pygame.Surface):
     #  when current score is a new hi-score
 
     def __init__(self):
-        super().__init__(SCOREBOARD_SIZE)
-        self.fill(SCOREBOARD_BACKGROUND_COLOR)
-        for i, title in enumerate(SCOREBOARD_TITLES):
+        super().__init__(
+            size=(settings.scoreboard.width, settings.scoreboard.height)
+        )
+        self.fill(settings.scoreboard.background_color.rgb)
+        for i, title in enumerate(settings.scoreboard.titles):
             _section = Section(
                 header=title,
-                value=SCOREBOARD_SECTION_DEFAULT_VALUE,
-                color=LABEL_FONT_COLOR,
-                background_color=SCOREBOARD_BACKGROUND_COLOR,
-                border_radius=SCOREBOARD_SECTION_BORDER_RADIUS,
-                border_thickness=SCOREBOARD_SECTION_BORDER_THICKNESS,
-                font_size=SCOREBOARD_SECTION_FONT_SIZE,
-                padding=SCOREBOARD_SECTION_PADDING,
+                value=settings.scoreboard.section.value,
+                font_color=settings.scoreboard.section.font_color,
+                background_color=settings.scoreboard.background_color,
+                border_radius=settings.scoreboard.section.border.radius,
+                border_thickness=settings.scoreboard.section.border.thickness,
+                border_color=settings.scoreboard.section.border.color,
+                font_size=settings.scoreboard.section.font_size,
+                padding=settings.scoreboard.section.padding,
+                spacing=settings.scoreboard.section.spacing
             )
 
-            x, y = SCOREBOARD_SECTION_START_POINT
+            x = settings.scoreboard.section.starting_point.x
+            y = settings.scoreboard.section.starting_point.y
             centered_rect = pygame.Rect(
                 x + self.get_width() / 2 - _section.get_width() / 2,
-                y + i * (_section.get_height() + SCOREBOARD_SECTION_SPACING),
+                y + i * (_section.get_height() + settings.scoreboard.section.spacing),
                 _section.get_width(),
                 _section.get_height(),
             )
             self.blit(_section, centered_rect)
-
-    @property
-    def left_top(self) -> Tuple[int, int]:
-        return self.config["left_top"]

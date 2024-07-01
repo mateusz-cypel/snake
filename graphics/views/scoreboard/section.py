@@ -1,12 +1,7 @@
-from typing import Any, Tuple
-
 import pygame
 
 from graphics.widgets import Label
-
-DEFAULT_SPACING = 10
-DEFAULT_PADDING = (0, 0)
-DEFAULT_BORDER_COLOR = (0, 0, 0)
+from settings import Color, Padding
 
 
 # todo border validation, all params > 0
@@ -15,37 +10,36 @@ class Section(pygame.Surface):
         self,
         header: str,
         value: int,
-        color: Any,
+        font_color: Color,
         font_size: int,
-        background_color: Any,
+        background_color: Color,
         border_radius: int,
         border_thickness: int,
-        border_color: Any = DEFAULT_BORDER_COLOR,
-        spacing: int = DEFAULT_SPACING,
-        padding: Tuple[int, int] = DEFAULT_PADDING,
+        border_color: Color,
+        spacing: int,
+        padding: Padding,
     ):
-        self.header_label = Label(header, color, font_size)
-        self.value_label = Label(str(value), color, font_size)
+        self.header_label = Label(header, font_color.rgb, font_size)
+        self.value_label = Label(str(value), font_color.rgb, font_size)
 
-        padding_x, padding_y = padding
-        width = max(self.header_label.rect.w, self.value_label.rect.w) + padding_x * 2
+        width = max(self.header_label.rect.w, self.value_label.rect.w) + padding.x * 2
         height = (
-            self.header_label.rect.h + spacing + self.value_label.rect.h + padding_y * 2
+            self.header_label.rect.h + spacing + self.value_label.rect.h + padding.y * 2
         )
 
         super().__init__(size=(width, height))
-        self.fill(background_color)
+        self.fill(background_color.rgb)
 
         header_rect = pygame.Rect(
             width / 2 - self.header_label.rect.w / 2,
-            padding_y + self.header_label.rect.y,
+            padding.y + self.header_label.rect.y,
             self.header_label.rect.w,
             self.header_label.rect.h,
         )
 
         value_rect = pygame.Rect(
             width / 2 - self.value_label.rect.w / 2,
-            padding_y + self.header_label.rect.h + spacing,
+            padding.y + self.header_label.rect.h + spacing,
             self.value_label.rect.w,
             self.value_label.rect.h,
         )
@@ -53,5 +47,5 @@ class Section(pygame.Surface):
         self.blit(self.header_label.image, header_rect)
         self.blit(self.value_label.image, value_rect)
         pygame.draw.rect(
-            self, border_color, self.get_rect(), border_thickness, border_radius
+            self, border_color.rgb, self.get_rect(), border_thickness, border_radius
         )
