@@ -1,21 +1,12 @@
 import random
 
 from models import Apple, Orange, Strawberry
+from settings import settings
 
-APPLE_SCORE = 5
-APPLE_ENERGY = 5
-
-ORANGE_SCORE = 5
-ORANGE_ENERGY = 5
-
-STRAWBERRY_SCORE = 5
-STRAWBERRY_ENERGY = 5
-
-APPLE_DROP_RATE = 70
-ORANGE_DROP_RATE = 20
-STRAWBERRY_DROP_RATE = 10
 DROP_RATES = [
-    APPLE_DROP_RATE, ORANGE_DROP_RATE, STRAWBERRY_DROP_RATE
+    settings.fruit.apple.drop_rate,
+    settings.fruit.orange.drop_rate,
+    settings.fruit.strawberry.drop_rate,
 ]
 
 
@@ -25,17 +16,17 @@ class FruitProvider:
 
     def get(self):
         rand_int = random.randint(0, self.drop_rates_sum - 1)
-        if rand_int < APPLE_DROP_RATE:
+        if rand_int < settings.fruit.apple.drop_rate:
             return Apple(
-                score=APPLE_SCORE,
-                energy=APPLE_ENERGY,
+                score=settings.fruit.apple.score,
+                energy=settings.fruit.apple.energy,
             )
-        if rand_int < APPLE_DROP_RATE + ORANGE_DROP_RATE:
+        if rand_int < settings.fruit.apple.drop_rate + settings.fruit.orange.drop_rate:
             return Orange(
-                score=ORANGE_SCORE,
-                energy=ORANGE_ENERGY,
+                score=settings.fruit.orange.score,
+                energy=settings.fruit.orange.energy,
             )
         return Strawberry(
-            score=STRAWBERRY_SCORE,
-            energy=STRAWBERRY_ENERGY,
+            score=settings.fruit.strawberry.score,
+            energy=settings.fruit.strawberry.energy,
         )

@@ -82,8 +82,47 @@ settings = Settings(
     ),
     snake=SnakeSettings(
         starting_energy=SNAKE_STARTING_ENERGY,
+        head_color=Color(
+            red=SNAKE_HEAD_COLOR[0],
+            green=SNAKE_HEAD_COLOR[1],
+            blue=SNAKE_HEAD_COLOR[2],
+        ),
+        body_color=Color(
+            red=SNAKE_BODY_COLOR[0],
+            green=SNAKE_BODY_COLOR[1],
+            blue=SNAKE_BODY_COLOR[2],
+        ),
     ),
     fruit=FruitSettings(
-
+        apple=AppleFruit(
+            color=Color(
+                red=FRUIT_APPLE_COLOR[0],
+                green=FRUIT_APPLE_COLOR[1],
+                blue=FRUIT_APPLE_COLOR[2],
+            ),
+            drop_rate=FRUIT_APPLE_DROP_RATE,
+            energy=FRUIT_APPLE_ENERGY,
+            score=FRUIT_APPLE_SCORE,
+        ),
+        orange=OrangeFruit(
+            color=Color(
+                red=FRUIT_ORANGE_COLOR[0],
+                green=FRUIT_ORANGE_COLOR[1],
+                blue=FRUIT_ORANGE_COLOR[2],
+            ),
+            drop_rate=FRUIT_ORANGE_DROP_RATE,
+            energy=FRUIT_ORANGE_ENERGY,
+            score=FRUIT_ORANGE_SCORE,
+        ),
+        strawberry=StrawberryFruit(
+            color=Color(
+                red=FRUIT_STRAWBERRY_COLOR[0],
+                green=FRUIT_STRAWBERRY_COLOR[1],
+                blue=FRUIT_STRAWBERRY_COLOR[2],
+            ),
+            drop_rate=FRUIT_STRAWBERRY_DROP_RATE,
+            energy=FRUIT_STRAWBERRY_ENERGY,
+            score=FRUIT_STRAWBERRY_SCORE,
+        )
     )
 )

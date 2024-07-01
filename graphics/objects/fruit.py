@@ -1,4 +1,5 @@
 from graphics.objects.object import Object
+from settings import settings
 
 
 class Fruit(Object):
@@ -6,12 +7,12 @@ class Fruit(Object):
 
 
 class Apple(Fruit):
-    color = (9, 154, 38)
+    color = settings.fruit.apple.color
 
 
 class Orange(Fruit):
-    color = (223, 111, 25)
+    color = settings.fruit.orange.color
 
 
 class Strawberry(Fruit):
-    color = (176, 18, 18)
+    color = settings.fruit.strawberry.color

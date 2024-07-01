@@ -57,6 +57,29 @@ class Section:
 
 
 @dataclass(frozen=True)
+class Fruit:
+    color: Color
+    drop_rate: int
+    energy: int
+    score: int
+
+
+@dataclass(frozen=True)
+class AppleFruit(Fruit):
+    pass
+
+
+@dataclass(frozen=True)
+class OrangeFruit(Fruit):
+    pass
+
+
+@dataclass(frozen=True)
+class StrawberryFruit(Fruit):
+    pass
+
+
+@dataclass(frozen=True)
 class WindowSettings:
     width: int
     height: int
@@ -88,11 +111,15 @@ class ScoreboardSettings:
 @dataclass(frozen=True)
 class SnakeSettings:
     starting_energy: int
+    head_color: Color
+    body_color: Color
 
 
 @dataclass(frozen=True)
 class FruitSettings:
-    pass
+    apple: AppleFruit
+    orange: OrangeFruit
+    strawberry: StrawberryFruit
 
 
 @dataclass(frozen=True)

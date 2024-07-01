@@ -1,9 +1,10 @@
 from graphics.objects.object import Object
+from settings import settings
 
 
 class SnakeBody(Object):
-    color = (225, 175, 209)
+    color = settings.snake.body_color
 
 
 class SnakeHead(Object):
-    color = (173, 136, 198)
+    color = settings.snake.head_color
