@@ -1,6 +1,8 @@
 import pygame
 
 from handlers.joystick_input_handler import JoystickInputHandlerSubjectWrapper, JoystickInputHandler
+from handlers.score_handler import ScoreHandler
+from handlers.snake_energy_handler import SnakeEnergyHandler
 from handlers.snake_movement_handler import SnakeMovementHandler
 from providers.free_spot_provider import FreeSpotProvider
 from providers.fruit_provider import FruitProvider
@@ -55,6 +57,8 @@ class GameHandler:
             board=self.board_handler
         )
         self.snake_movement_handler = SnakeMovementHandler()
+        self.snake_energy_handler = SnakeEnergyHandler(snake=self.snake)
+        self.score_handler = ScoreHandler()
 
         # init snake and first fruit position on the board
         self.board_handler.add_snake_head(
@@ -81,6 +85,9 @@ class GameHandler:
         self.map.clear()
         self.joystick_input_handler_subject_wrapper.read()
 
+        self.snake_energy_handler.move()
+        self.scoreboard.update_energy(self.snake.energy)
+
         move = self.snake_movement_handler.next_move(
             direction=self.snake.direction
         )
@@ -94,12 +101,26 @@ class GameHandler:
             CollisionStatus.BORDER_COLLISION,
             CollisionStatus.SNAKE_COLLISION
         ):
-            next_index = BoardIndex(1,1)
+            self.snake_energy_handler.hit_border()
+            self.scoreboard.update_energy(self.snake.energy)
+            next_index = self.spot_provider.get()
         elif collision == CollisionStatus.FRUIT_COLLISION:
             # todo when no free spots then raises IndexError
             #  potential win condition
+            self.snake_energy_handler.eat_fruit(self.board_handler.current_fruit)
+            self.score_handler.handle(self.board_handler.current_fruit)
+            self.scoreboard.update_energy(self.snake.energy)
+            self.scoreboard.update_score(self.score_handler.score)
+            self.scoreboard.update_hi_score(self.score_handler.hi_score)
             spot = self.spot_provider.get()
             self.board_handler.add_fruit(index=spot, fruit=self.fruit_provider.get())
+
+        if not self.snake_energy_handler.is_alive():
+            self.snake_energy_handler.reset()
+            self.score_handler.reset()
+            self.scoreboard.update_energy(self.snake.energy)
+            self.scoreboard.update_score(self.score_handler.score)
+            self.scoreboard.update_hi_score(self.score_handler.hi_score)
 
         self.board_handler.move_snake_to(next_index)
         self.map.draw_grid()
