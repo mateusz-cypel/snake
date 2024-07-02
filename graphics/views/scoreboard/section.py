@@ -63,5 +63,12 @@ class Section(pygame.Surface):
             self.value_label.rect.w,
             self.value_label.rect.h,
         )
-        self.fill(self.background_color.rgb, value_rect)
+
+        rect_to_clear = pygame.Rect(
+            self.get_rect().left + self.padding.x,
+            value_rect.top,
+            self.get_width() - self.padding.x * 2,
+            value_rect.height
+        )
+        self.fill(self.background_color.rgb, rect_to_clear)
         self.blit(self.value_label.image, value_rect)
