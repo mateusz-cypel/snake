@@ -35,11 +35,11 @@ class BoardFruitMapper:
 
 class BoardHandler:
     def __init__(self, board_size: Size, cell_size: Size):
-        self.snake_head_index = None
-        self.snake_tail_index = None
+        self.snake_head_index: BoardIndex = None
+        self.snake_tail_index: BoardIndex = None
 
-        self.current_fruit = None
-        self.current_fruit_index = None
+        self.current_fruit: Fruit = None
+        self.current_fruit_index: BoardIndex = None
 
         self._board = Board(
             rows=board_size.height // cell_size.height,

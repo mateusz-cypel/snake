@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Tuple, Iterable, Optional
+from typing import Tuple, Optional
 
 
 @dataclass(frozen=True)
@@ -51,6 +51,7 @@ class Section:
     padding: Padding
     border: Border
     value: int
+    max_value: int
     font_size: int
     font_color: Color
     starting_point: Point
@@ -103,7 +104,9 @@ class ScoreboardSettings:
     top: int
     width: int
     height: int
-    titles: Iterable[str]
+    score_title: str
+    hi_score_title: str
+    energy_title: str
     background_color: Color
     section: Section
 
