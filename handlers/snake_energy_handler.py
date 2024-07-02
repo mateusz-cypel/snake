@@ -4,8 +4,8 @@ from models import Snake, Fruit
 class SnakeEnergyHandler:
     def __init__(self, snake: Snake):
         self.snake = snake
-        self._energy = snake.energy * 10
-        self._max_energy = 100 * 10
+        self._energy = self._max_energy = 100 * 10
+        self.snake.energy = self._energy // 10
 
     def move(self) -> None:
         self._energy -= 1
@@ -24,3 +24,7 @@ class SnakeEnergyHandler:
 
     def is_alive(self) -> bool:
         return self.snake.energy > 0
+
+    def reset(self) -> None:
+        self._energy = self._max_energy
+        self.snake.energy = self._energy // 10
