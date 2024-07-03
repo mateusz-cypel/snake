@@ -7,7 +7,7 @@ from handlers.snake_movement_handler import SnakeMovementHandler
 from providers.free_spot_provider import FreeSpotProvider
 from providers.fruit_provider import FruitProvider
 from graphics.objects.fruit import Orange as OrangeObject, Apple as AppleObject, Strawberry as StrawberryObject
-from graphics.objects.snake import SnakeHead
+from graphics.objects.snake import SnakeHead, SnakeBody
 from graphics.views.map import Map
 from graphics.views.scoreboard import Scoreboard
 from handlers.board_handler import BoardHandler, CollisionStatus
@@ -95,7 +95,7 @@ class GameHandler:
         collision = self.board_handler.check_collision(next_index)
 
         self.draw_fruit(self.board_handler.current_fruit_index)
-        self.draw_snake(index=next_index)
+        self.draw_snake(index=self.board_handler.snake_head_index)
 
         if collision in (
             CollisionStatus.BORDER_COLLISION,
@@ -104,9 +104,12 @@ class GameHandler:
             self.snake_energy_handler.hit_border()
             self.scoreboard.update_energy(self.snake.energy)
             next_index = self.spot_provider.get()
+            self.board_handler.move_snake_to(next_index)
         elif collision == CollisionStatus.FRUIT_COLLISION:
             # todo when no free spots then raises IndexError
             #  potential win condition
+            self.board_handler.add_snake_body(self.board_handler.snake_head_index)
+            self.board_handler.add_snake_head(next_index)
             self.snake_energy_handler.eat_fruit(self.board_handler.current_fruit)
             self.score_handler.handle(self.board_handler.current_fruit)
             self.scoreboard.update_energy(self.snake.energy)
@@ -114,7 +117,8 @@ class GameHandler:
             self.scoreboard.update_hi_score(self.score_handler.hi_score)
             spot = self.spot_provider.get()
             self.board_handler.add_fruit(index=spot, fruit=self.fruit_provider.get())
-
+        else:
+            self.board_handler.move_snake_to(next_index)
         if not self.snake_energy_handler.is_alive():
             self.snake_energy_handler.reset()
             self.score_handler.reset()
@@ -122,7 +126,6 @@ class GameHandler:
             self.scoreboard.update_score(self.score_handler.score)
             self.scoreboard.update_hi_score(self.score_handler.hi_score)
 
-        self.board_handler.move_snake_to(next_index)
         self.map.draw_grid()
         self.refresh()
 
@@ -144,6 +147,15 @@ class GameHandler:
             snake_head_cell.width,
             snake_head_cell.height
         ).draw_on(self.map)
+
+        for snake_body_part_index in self.board_handler.body_parts:
+            snake_body_part_cell = self.map.get_cell(snake_body_part_index)
+            SnakeBody(
+                snake_body_part_cell.left,
+                snake_body_part_cell.top,
+                snake_body_part_cell.width,
+                snake_body_part_cell.height,
+            ).draw_on(self.map)
 
     def refresh(self):
         self.display_surface.blit(

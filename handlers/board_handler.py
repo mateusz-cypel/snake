@@ -36,7 +36,7 @@ class BoardFruitMapper:
 class BoardHandler:
     def __init__(self, board_size: Size, cell_size: Size):
         self.snake_head_index: BoardIndex = None
-        self.snake_tail_index: BoardIndex = None
+        self.body_parts = []
 
         self.current_fruit: Fruit = None
         self.current_fruit_index: BoardIndex = None
@@ -62,8 +62,17 @@ class BoardHandler:
         self.snake_head_index = index
         self._add_object(index=self.snake_head_index, sign=SNAKE_HEAD)
 
+    def add_snake_body(self, index: BoardIndex):
+        self.body_parts = [index, *self.body_parts]
+        self._add_object(index, sign=SNAKE_BODY)
+
     def move_snake_to(self, index: BoardIndex):
-        self.clear_cell(self.snake_head_index)
+        all_parts = [self.snake_head_index, *self.body_parts]
+        for part_index in all_parts:
+            self.clear_cell(part_index)
+        self.body_parts.clear()
+        for part in reversed(all_parts[:-1]):
+            self.add_snake_body(part)
         self.add_snake_head(index=index)
 
     def clear_cell(self, index: BoardIndex):
